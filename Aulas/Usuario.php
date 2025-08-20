@@ -28,7 +28,7 @@ class Usuario {
 
 $usuario1 = new Usuario(
     "Gabriel Marques Terra",
-    49856178819,
+    "49856178819",
     "M",
     "joao.silva@email.com",
     "Solteiro",
