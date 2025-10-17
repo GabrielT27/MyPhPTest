@@ -15,13 +15,13 @@ $dao-> criarAluno(new Aluno( 1, "Maria", "Design"));
 
 $dao-> criarAluno (new Aluno(2, "Gabriel", "Moda"));
 
-$dao-> criarAluno (new Aluno(2, "Eduardo", "Manicure"));
+$dao-> criarAluno (new Aluno(3, "Eduardo", "Manicure"));
 
 
 // READ 
 
 echo "\nListagem Inicial: \n";
-foreach ($dao->lerAluno() as $aluno1) {
+foreach ($dao->lerAluno() as $aluno) {
     echo "{$aluno->getId()} - {$aluno->getNome()} - {$aluno->getCurso()}\n";
     
 }

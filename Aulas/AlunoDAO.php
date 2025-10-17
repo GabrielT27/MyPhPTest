@@ -13,10 +13,6 @@ Class AlunoDAO {   // "DAO --> "Data Acess Object"
 
      public function lerAluno(){ // Método READ --> para ler informações de um objeto já existente;
         return $this->alunos;
-    
- 
-
-        
     }
      public function atualizarAluno($id, $novoNome, $novoCurso)
             

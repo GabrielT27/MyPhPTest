@@ -8,9 +8,9 @@ class aluno {
 
 
     public function __construct($id, $nome, $curso) {
-        $this-> id;
-        $this-> nome;
-        $this->curso;
+        $this-> id = $id;
+        $this-> nome = $nome;
+        $this->curso = $curso;
     }
 
     public function setId($id) { 
