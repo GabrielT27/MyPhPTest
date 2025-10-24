@@ -1,0 +1,12 @@
+{
+    "1": {
+        "id": 1,
+        "nome": "Maria",
+        "curso": "Design"
+    },
+    "3": {
+        "id": 3,
+        "nome": "Viviane",
+        "curso": "Eletricista"
+    }
+}
