@@ -1,119 +1,69 @@
-<?php 
 
-require_once 'bebidasCRUD.php'; // Importa a classe BEBIDAS para uso
+<?php
+require_once 'Bebida.php';
 
-class BebidasDAO { 
-    private $Bebidas = [];
-    private $arquivo = "Bebidas.json";
+class BebidaDAO {
+    private $bebidasArray = [];
+    private $arquivoJson = 'bebidas.json';
 
-    public function __construct() {
-        if (file_exists($this->arquivo)) {
-            $conteudo = file_get_contents($this->arquivo);
-            $dados = json_decode($conteudo, true);
+    public function __construct(){
+        if(file_exists($this->arquivoJson)){
+            $conteudoArquivo = file_get_contents($this->arquivoJson);
 
-            if ($dados) {
-                foreach ($dados as $codigo => $info) {
-                    $this->Bebidas[$codigo] = new Bebidas(
-                        $info["Nome"],
-                        $info["Categoria"],
-                        $info["Volume"],
-                        $info["Valor"],
-                        $info["Qtde"]
+            $dadosArquivoEmArray = json_decode($conteudoArquivo, true);
+
+            if ($dadosArquivoEmArray){
+                foreach ($dadosArquivoEmArray as $nome => $info){
+                    $this->bebidasArray[$nome] = new Bebida(
+                        $info['nome'],
+                        $info['categoria'],
+                        $info['volume'],
+                        $info['valor'],
+                        $info['qtde']
                     );
                 }
             }
         }
     }
+        private function salvarArquivo(){
+            $dadosParaSalvar=[];
 
-    // FUNÇÕES PRIVADA PARA SALVAR OS DADOS NO ARQUIVO JSON 
-    private function salvarEmArquivo() {
-        $dados = [];
-
-        foreach ($this->Bebidas as $codigo => $bebida) {
-            $dados[$codigo] = [
-                'Nome' => $bebida->getNome(),
-                'Categoria' => $bebida->getCategoria(),
-                'Volume' => $bebida->getVolume(),
-                'Valor' => $bebida->getValor(),
-                'Qtde' => $bebida->getQtde()
-            ];
-        }
-
-        $json = json_encode($dados, JSON_PRETTY_PRINT);
-        file_put_contents($this->arquivo, $json);
-    }
-
-    // CREATE - Criar uma nova bebida
-    public function criarBebida($codigo, $nome, $categoria, $volume, $valor, $qtde) {
-        if (!isset($this->Bebidas[$codigo])) {
-            $this->Bebidas[$codigo] = new Bebidas($nome, $categoria, $volume, $valor, $qtde);
-            $this->salvarEmArquivo();
-            return true;
-        }
-        return false;
-    }
-
-    // READ - Ler uma bebida específica
-    public function ler($codigo) {
-        return isset($this->Bebidas[$codigo]) ? $this->Bebidas[$codigo] : null;
-    }
-
-    // READ ALL - Ler todas as bebidas
-    public function lerTodos() {
-        return $this->Bebidas;
-    }
-
-    // UPDATE - Atualizar uma bebida
-    public function atualizar($codigo, $nome, $categoria, $volume, $valor, $qtde) {
-        if (isset($this->Bebidas[$codigo])) {
-            $bebida = $this->Bebidas[$codigo];
-            $bebida->setNome($nome);
-            $bebida->setCategoria($categoria);
-            $bebida->setVolume($volume);
-            $bebida->setValor($valor);
-            $bebida->setQtde($qtde);
-            $this->salvarEmArquivo();
-            return true;
-        }
-        return false;
-    }
-
-    // DELETE - Excluir uma bebida
-    public function excluir($codigo) {
-        if (isset($this->Bebidas[$codigo])) {
-            unset($this->Bebidas[$codigo]);
-            $this->salvarEmArquivo();
-            return true;
-        }
-        return false;
-    }
-
-    // Método para buscar bebidas por categoria
-    public function buscarPorCategoria($categoria) {
-        $resultado = [];
-        foreach ($this->Bebidas as $codigo => $bebida) {
-            if ($bebida->getCategoria() === $categoria) {
-                $resultado[$codigo] = $bebida;
+            foreach ($this->bebidasArray as $nome => $bebida){
+                $dadosParaSalvar[$nome]=[
+                    'nome'=>$bebida->getNome(),
+                    'categoria'=>$bebida->getCategoria(),
+                    'volume'=>$bebida->getVolume(),
+                    'valor'=>$bebida->getValor(),
+                    'qtde'=>$bebida->getQtde()
+                ];
             }
+            file_put_contents($this->arquivoJson, json_encode($dadosParaSalvar, JSON_PRETTY_PRINT));
         }
-        return $resultado;
-    }
 
-    // Método para verificar estoque
-    public function verificarEstoque($codigo) {
-        if (isset($this->Bebidas[$codigo])) {
-            return $this->Bebidas[$codigo]->getQtde();
+        // CREATE
+        public function criarBebida(Bebida $bebida){
+            $this->bebidasArray[$bebida->getNome()] = $bebida;
+            $this->salvarArquivo();
         }
-        return 0;
-    }
 
-    // Método para atualizar quantidade em estoque
-    public function atualizarEstoque($codigo, $novaQtde) {
-        if (isset($this->Bebidas[$codigo])) {
-            $this->Bebidas[$codigo]->setQtde($novaQtde);
-            $this->salvarEmArquivo();
-            return true;
+        //READ
+        public function lerBebidas(){
+            return $this->bebidasArray;
         }
-        return false;
-    }
+        
+        // UPDATE 
+        public function atualizarBebida($nome, $novoValor, $novaQtde){
+            if(isset($this->bebidasArray[$nome])){
+                $this->bebidasArray[$nome]->setValor($novoValor);
+                $this->bebidasArray[$nome]->setQtde($novaQtde);
+            }
+            $this->salvarArquivo();
+        }
+
+        // DELETE
+        public function excluirBebida($nome){
+            unset($this->bebidasArray[$nome]);
+            $this->salvarArquivo();
+        }
+    
 }
