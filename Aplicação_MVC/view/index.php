@@ -1,0 +1,123 @@
+<?php
+// Importa o arquivo do controller que contém a lógica de controle
+require_once __DIR__ . '/../controller/bebidaController.php';
+
+// Usa o namespace correto do controller
+use Controller\BebidaController;
+
+// Cria uma instância do controller para manipular as bebidas
+$controller = new BebidaController();
+
+// Verifica se o formulário foi enviado via método POST
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Se a ação for "criar", chama o método de criação no controller
+    if ($_POST['acao'] === 'criar') {
+        $controller->criar($_POST['nome'], $_POST['categoria'], $_POST['volume'], $_POST['valor'], $_POST['qtde']);
+    } 
+    
+    elseif ($_POST['acao'] === 'editar') {
+        $controller->editar($_POST['nome'], $_POST['categoria'], $_POST['volume'], $_POST['valor'], $_POST['qtde']);
+    }
+
+    // Se a ação for "deletar", chama o método de exclusão no controller
+    elseif ($_POST['acao'] === 'deletar') {
+        $controller->deletar($_POST['nome']);
+    }
+}
+
+// Obtém a lista atualizada de bebidas do controller
+$lista = $controller->ler();
+?>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciamento de Bebidas</title>
+</head>
+<body>
+<header>🍾 Sistema de Gerenciamento de Bebidas</header>
+
+<main>
+    <!-- Formulário de cadastro de nova bebida -->
+    <h2>Cadastrar nova bebida</h2>
+    <form method="POST">
+        <!-- Campo oculto que define a ação como "criar" -->
+        <input type="hidden" name="acao" value="criar">
+
+        <!-- Campos do formulário -->
+        <input type="text" name="nome" placeholder="Nome da bebida" required>
+
+        <select name="categoria" required>
+            <option value="">Categoria</option>
+            <option value="Refrigerante">Refrigerante</option>
+            <option value="Cerveja">Cerveja</option>
+            <option value="Vinho">Vinho</option>
+            <option value="Destilado">Destilado</option>
+            <option value="Água">Água</option>
+            <option value="Suco">Suco</option>
+            <option value="Energético">Energético</option>
+        </select>
+
+        <input type="text" name="volume" placeholder="Volume (ex: 350ml)" required>
+        <input type="number" step="0.01" name="valor" placeholder="Valor (R$)" required>
+        <input type="number" name="qtde" placeholder="Quantidade" required>
+
+        <!-- Botão de envio -->
+        <button type="submit">Cadastrar</button>
+    </form>
+
+    <!-- Tabela de bebidas cadastradas -->
+    <h2>Bebidas cadastradas</h2>
+    <!-- Corrigido: o atributo border estava errado -->
+    <table border."1" cellpadding="5">
+        <tr>
+            <th>Nome</th>
+            <th>Categoria</th>
+            <th>Volume</th>
+            <th>Valor (R$)</th>
+            <th>Quantidade</th>
+            <th>Ações</th>
+        </tr>
+
+        <!-- Se não houver bebidas, mostra mensagem -->
+        <?php if (empty($lista)): ?>
+            <tr><td colspan="6">Nenhuma bebida cadastrada ainda.</td></tr>
+
+        <?php else: ?>
+            <!-- Percorre a lista de bebidas -->
+            <?php foreach ($lista as $bebida): ?>
+                <tr>
+                    <!-- Exibe cada dado da bebida -->
+                    <td><?= htmlspecialchars($bebida->getNome()) ?></td>
+                    <td><?= htmlspecialchars($bebida->getCategoria()) ?></td>
+                    <td><?= htmlspecialchars($bebida->getVolume()) ?></td>
+                    <td><?= number_format($bebida->getValor(), 2, ',', '.') ?></td>
+                    <td><?= htmlspecialchars($bebida->getQtde()) ?></td>
+
+                    <td>
+                        <!-- Formulário para excluir bebida -->
+                        <form method="POST" style="display:inline;">
+                            <input type="hidden" name="acao" value="deletar">
+                            <input type="hidden" name="nome" value="<?= htmlspecialchars($bebida->getNome()) ?>">
+                            <button type="submit" onclick="return confirm('Deseja excluir esta bebida?')">Excluir</button>
+                        </form>
+                        </td>
+
+
+                        <td>
+                        <!-- Formulário de update (a ser implementado no futuro) -->
+                        <form method="POST" action="update.php">
+                            <input type="hidden" name="acao" value="editar">
+                            <input type="hidden" name="nome" value="<?= htmlspecialchars($bebida->getNome())?>">
+                            <button type="submit" onclick="return confirm('Deseja editar esta bebida??')">Editar</button>
+                            
+                        </form>
+                    </td>
+            </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </table>
+</main>
+</body>
+</html>
