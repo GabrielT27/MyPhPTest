@@ -23,6 +23,28 @@ class Bebida {
         $this->qtde = $qtde;           // Quantidade em estoque
     }
 
+      // ⚙️ Métodos SET — usados para definir (alterar) valores
+
+      public function setNome($nome) {
+        $this->nome=$nome;
+      }
+
+      public function setCategoria($categoria) {
+        $this->categoria=$categoria;
+      }
+
+      public function setVolume($volume) {
+        $this->volume=$volume;
+      }
+
+      public function setValor($valor) {
+        $this->valor=$valor;
+      }
+
+      public function setQtde($qtde) {
+        $this->qtde=$qtde;
+      }
+
     // ⚙️ Métodos GET — usados para acessar (ler) os valores dos atributos.
     // São a forma "segura" de pegar os dados sem expor diretamente as variáveis privadas.
     public function getNome(){ return $this->nome; }

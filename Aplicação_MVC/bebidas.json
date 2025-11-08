@@ -5,5 +5,12 @@
         "volume": "234ml",
         "valor": 56,
         "qtde": 546
+    },
+    "gabriel marques": {
+        "nome": "gabriel marques",
+        "categoria": "Refrigerante",
+        "volume": "23454534ml",
+        "valor": "3241",
+        "qtde": "321116"
     }
 }

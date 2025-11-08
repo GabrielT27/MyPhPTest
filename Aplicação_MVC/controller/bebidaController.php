@@ -9,8 +9,8 @@ require_once __DIR__ . '/../model/bebidasDAO.php';
 require_once __DIR__ . '/../model/Bebida.php';
 
 // Importa as classes BebidaDAO e Bebida, para poder usá-las aqui
-use Model\BebidaDAO;
-use Model\Bebida;
+use model\BebidaDAO;
+use model\Bebida;
 
 class BebidaController {
     private $dao; // Propriedade que vai guardar o objeto de acesso aos dados (DAO)

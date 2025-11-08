@@ -96,22 +96,49 @@ $lista = $controller->ler();
 
                     <td>
                         <!-- Formulário para excluir bebida -->
-                        <form method="POST" style="display:inline;">
-                            <input type="hidden" name="acao" value="deletar">
-                            <input type="hidden" name="nome" value="<?= htmlspecialchars($bebida->getNome()) ?>">
-                            <button type="submit" onclick="return confirm('Deseja excluir esta bebida?')">Excluir</button>
-                        </form>
-                        </td>
+                        <!-- Formulário para EDITAR (atualizar) os dados de uma bebida -->
+<form method="POST">
+    
+    <!-- Campo oculto que indica qual ação o PHP deve executar -->
+    <!-- Aqui definimos que essa requisição é do tipo "editar" -->
+    <input type="hidden" name="acao" value="editar">
 
+    <!-- Campo oculto com o nome da bebida original -->
+    <!-- O nome é usado como "chave" para identificar qual bebida editar -->
+    <input type="hidden" name="nome" value="<?= htmlspecialchars($bebida->getNome()) ?>">
 
-                        <td>
-                        <!-- Formulário de update (a ser implementado no futuro) -->
-                        <form method="POST" action="update.php">
-                            <input type="hidden" name="acao" value="editar">
-                            <input type="hidden" name="nome" value="<?= htmlspecialchars($bebida->getNome())?>">
-                            <button type="submit" onclick="return confirm('Deseja editar esta bebida??')">Editar</button>
-                            
-                        </form>
+    <!-- Campo de texto para editar a categoria da bebida -->
+    <!-- O valor inicial vem do que já está cadastrado -->
+    <input type="text" 
+           name="categoria" 
+           value="<?= htmlspecialchars($bebida->getCategoria()) ?>" 
+           placeholder="Categoria">
+
+    <!-- Campo de texto para editar o volume (ex: 350ml, 1L, etc.) -->
+    <input type="text" 
+           name="volume" 
+           value="<?= htmlspecialchars($bebida->getVolume()) ?>" 
+           placeholder="Volume">
+
+    <!-- Campo numérico para editar o valor (preço) -->
+    <!-- step="0.01" permite inserir casas decimais -->
+    <input type="number" 
+           step="0.01" 
+           name="valor" 
+           value="<?= htmlspecialchars($bebida->getValor()) ?>" 
+           placeholder="Valor (R$)">
+
+    <!-- Campo numérico para editar a quantidade em estoque -->
+    <input type="number" 
+           name="qtde" 
+           value="<?= htmlspecialchars($bebida->getQtde()) ?>" 
+           placeholder="Quantidade">
+
+    <!-- Botão que envia o formulário -->
+    <!-- Quando clicado, o PHP processa os dados e chama o método editar() -->
+    <button type="submit">Salvar</button>
+</form>
+
                     </td>
             </td>
                 </tr>

@@ -120,21 +120,24 @@ class BebidaDAO {
     // ✏️ ATUALIZAR: muda o valor e quantidade de uma bebida existente
     // ===========================================================
    
-    public function editarBebida($nome, $categoria, $volume, $valor, $qtde):bool {
-        if (isset($this->bebidas[$nome])) {
-            $this->bebidas[$nome]->setNome($nome);
-            $this->bebidas[$categoria]->setCategoria($categoria);
-            $this->bebidas[$volume]->setVolume($volume);
-            $this->bebidas[$valor]->setValor($valor);
-            $this->bebidas[$qtde]->setQtde($qtde);
-            return true; // Não existe, então não tem o que editar
-        }
+  public function editarBebida($nome, $categoria, $volume, $valor, $qtde): bool {
+    // Verifica se a bebida existe
+    if (isset($this->bebidas[$nome])) {
+        $bebida = $this->bebidas[$nome]; // pega o objeto
 
-        
-    return $this->salvarEmArquivo(); // Atualiza o arquivo JSON
-    
-        
+        // Atualiza os valores
+        $bebida->setCategoria($categoria);
+        $bebida->setVolume($volume);
+        $bebida->setValor($valor);
+        $bebida->setQtde($qtde);
+
+        // Salva as alterações no arquivo
+        return $this->salvarEmArquivo();
     }
+
+    // Se não existe, retorna false
+    return false;
+}
 }
 
 
