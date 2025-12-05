@@ -1,5 +1,7 @@
     <?php
-    require_once __DIR__ . "/../Controller/LivrosController.php";
+    require_once __DIR__ . "/livrosController.php";
+
+
 
     $controller = new LivrosController();
     $mensagem = '';
