@@ -210,7 +210,7 @@
             }
             
             th {
-                background-color: #d40000;
+                background-color: #2b2b2bff;
                 color: white;
                 text-align: left;
                 padding: 12px 15px;
@@ -274,7 +274,7 @@
             }
             
             .modal h2 {
-                color: #d40000;
+                color: #141414ff;
                 margin-bottom: 20px;
                 padding-bottom: 10px;
                 border-bottom: 2px solid #f0f0f0;
@@ -332,8 +332,8 @@
 
             /* Estilos específicos para os formulários existentes */
             h1 {
-                color: #d40000;
-                margin-bottom: 20px;
+                color: #000000ff;
+                margin-bottom: 25px;
                 text-align: center;
             }
 
@@ -341,7 +341,7 @@
                 background: white;
                 padding: 25px;
                 border-radius: 8px;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                box-shadow: 0 2px 10px rgba(20, 19, 19, 1);
                 margin-bottom: 30px;
             }
 
@@ -361,7 +361,7 @@
             }
 
             button.cadastrar {
-                background-color: #d40000;
+                background-color: #0c9407ff;
                 color: white;
                 padding: 12px 20px;
                 border: none;
@@ -373,12 +373,12 @@
             }
 
             button.cadastrar:hover {
-                background-color: #a80000;
+                background-color: #095f26ff;
             }
 
             /* CORREÇÃO DO BOTÃO EDITAR */
             button.editar {
-                background-color: #ff9800;
+                background-color: #00aeffff;
                 color: white;
                 padding: 8px 16px;
                 border: none;
@@ -390,7 +390,7 @@
             }
 
             button.editar:hover {
-                background-color: #f57c00;
+                background-color: #097eb4ff;
             }
 
             button.excluir {
@@ -406,7 +406,7 @@
             }
 
             button.excluir:hover {
-                background-color: #b71c1c;
+                background-color: #800e0eff;
             }
 
             /* Estilo para os formulários inline na tabela */
